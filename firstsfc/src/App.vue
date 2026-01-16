@@ -1,5 +1,5 @@
 <template>
-  <h1>Prutas</h1>
+  <h1>Frutas</h1>
   <food-item/>
   <food-item2/>
 </template>
