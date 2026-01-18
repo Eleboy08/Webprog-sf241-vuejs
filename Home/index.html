@@ -7,11 +7,11 @@
   <style>
     /* Dark Theme Styles matching the screenshot */
     body {
-      background-color: #0d1117; /* Dark background */
-      color: #e6edf3; /* Light text */
+      background-color: #0d1117; /* Dark background matching GitHub UI */
+      color: #e6edf3; /* Light text for readability */
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
       margin: 0;
-      padding: 20px;
+      padding: 40px 20px;
     }
 
     .container {
@@ -23,17 +23,19 @@
       text-align: center;
       font-size: 1.5rem;
       text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 40px;
+      letter-spacing: 2px;
+      margin-bottom: 50px;
+      color: #ffffff;
     }
 
     section {
-      margin-bottom: 20px;
+      margin-bottom: 25px;
     }
 
     h3 {
-      font-size: 1.1rem;
-      margin-bottom: 5px;
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+      color: #ffffff;
     }
 
     ul {
@@ -43,34 +45,37 @@
     }
 
     li {
-      margin-bottom: 5px;
-      font-size: 0.95rem;
+      margin-bottom: 6px;
+      font-size: 1rem;
+      line-height: 1.5;
     }
 
-    /* Green Message Bar */
+    /* Green Message Bar matching screenshot */
     .status-bar {
       background-color: #238636;
       color: white;
-      padding: 10px;
+      padding: 8px 15px;
       display: inline-block;
-      margin-top: 20px;
-      font-weight: bold;
+      margin-top: 30px;
+      font-weight: 500;
+      border-radius: 2px;
     }
 
-    /* Bottom Gallery Box */
+    /* Bottom Gallery Box matching screenshot */
     .image-box {
       border: 1px solid #30363d;
-      padding: 15px;
+      padding: 20px;
       display: flex;
       justify-content: flex-start;
-      gap: 30px;
+      gap: 40px; /* Spacing between icons */
       margin-top: 10px;
-      overflow-x: auto;
+      background-color: #0d1117;
     }
 
     .image-box img {
-      height: 40px;
+      height: 45px; /* Consistent size for icons */
       width: auto;
+      display: block;
     }
   </style>
 </head>
@@ -78,7 +83,7 @@
 
 <div id="app" class="container">
   <header>
-    <h1>Personal Profile Web Page - {{ name }}</h1>
+    <h1>PERSONAL PROFILE WEB PAGE - {{ name }}</h1>
   </header>
 
   <main>
@@ -107,7 +112,7 @@
       <h3>IT Experience</h3>
       <ul>
         <li>Basic knowledge of HTML, CSS, and JavaScript</li>
-        <li>Exploring Vue.js frameworks</li>
+        <li>Learning Single Page Applications with Vue.js</li>
         <li>Version control using GitHub</li>
       </ul>
     </section>
@@ -115,17 +120,17 @@
     <section>
       <h3>Hobbies & Interests</h3>
       <ul>
-        <li>Learning new web technologies</li>
-        <li>Problem solving and coding</li>
-        <li>Exploring digital art</li>
+        <li>Web Development</li>
+        <li>Gaming and Technology</li>
+        <li>Exploring New Cuisines</li>
       </ul>
     </section>
 
     <section>
       <h3>Goals In Life / Dream</h3>
       <ul>
-        <li>To become a professional Software Engineer</li>
-        <li>To build impactful applications for the community</li>
+        <li>To become a Full-Stack Software Engineer</li>
+        <li>To innovate through digital solutions</li>
       </ul>
     </section>
 
@@ -134,33 +139,35 @@
     </div>
 
     <div class="image-box">
-      <img v-for="img in manyFoods" :src="img" :key="img">
+      <img v-for="img in foodGallery" :src="img" :key="img" alt="Favorite Food">
     </div>
   </main>
 </div>
 
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
 <script src="js/images.js"></script>
 
 <script>
-  const { createApp, ref } = Vue;
+  const { createApp, ref, onMounted } = Vue;
 
   createApp({
     setup() {
-      const name = ref('Heinrich M. Tobias');
+      const name = ref('HEINRICH M. TOBIAS');
       const message = ref('Yummm, my favorite food!!');
-      
-      // Fallback array if images.js is not loaded correctly
-      const foodIcons = ref(typeof manyFoods !== 'undefined' ? manyFoods : [
-        'https://via.placeholder.com/40',
-        'https://via.placeholder.com/40',
-        'https://via.placeholder.com/40'
-      ]);
+      const foodGallery = ref([]);
+
+      onMounted(() => {
+        // This checks if 'manyFoods' is defined in your js/images.js file
+        if (typeof manyFoods !== 'undefined') {
+          foodGallery.value = manyFoods;
+        }
+      });
 
       return {
         name,
         message,
-        manyFoods: foodIcons
+        foodGallery
       }
     }
   }).mount('#app')
