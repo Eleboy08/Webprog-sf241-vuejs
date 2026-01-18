@@ -1,185 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Heinrich M. Tobias | Digital Portfolio</title>
-  
-  <link rel="stylesheet" href="css/style.css?version=0.1">
+  <title>Heinrich M. Tobias</title>
+  <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/flexbox-grid.css">
   <link rel="stylesheet" href="css/images.css">
-
-  <style>
-    :root {
-      --primary: #64ffda;
-      --bg-dark: #0a192f;
-      --card-bg: rgba(255, 255, 255, 0.05);
-      --text-main: #ccd6f6;
-    }
-
-    body {
-      background-color: var(--bg-dark);
-      color: var(--text-main);
-      font-family: 'Segoe UI', Roboto, sans-serif;
-      margin: 0;
-      line-height: 1.6;
-    }
-
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 40px 20px;
-    }
-
-    header {
-      text-align: center;
-      margin-bottom: 60px;
-      border-bottom: 2px solid var(--primary);
-      display: inline-block;
-      width: 100%;
-    }
-
-    header h1 {
-      font-size: 2.5rem;
-      color: var(--primary);
-      text-transform: uppercase;
-      letter-spacing: 3px;
-    }
-
-    .main-content {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
-    }
-
-    /* Creative Card Design */
-    .profile-card {
-      background: var(--card-bg);
-      padding: 25px;
-      border-radius: 15px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      transition: transform 0.3s ease;
-      backdrop-filter: blur(10px);
-    }
-
-    .profile-card:hover {
-      transform: translateY(-10px);
-      border-color: var(--primary);
-    }
-
-    .profile-card h3 {
-      color: var(--primary);
-      margin-top: 0;
-      border-left: 4px solid var(--primary);
-      padding-left: 15px;
-    }
-
-    .gallery-section {
-      margin-top: 50px;
-      text-align: center;
-    }
-
-    .gallery-grid img {
-      width: 150px;
-      height: 150px;
-      object-fit: cover;
-      margin: 10px;
-      border-radius: 10px;
-      filter: grayscale(50%);
-      transition: 0.3s;
-    }
-
-    .gallery-grid img:hover {
-      filter: grayscale(0%);
-      transform: scale(1.1);
-    }
-
-    footer {
-      text-align: center;
-      margin-top: 80px;
-      font-size: 0.9rem;
-      opacity: 0.6;
-    }
-  </style>
 </head>
 <body>
 
-<div id="app" class="container">
-    <header>
-        <h1>{{ profileName }}</h1>
-        <p><em>{{ introTagline }}</em></p>
-    </header>
+<div id="app">
+  <header>
+    <h1>Heinrich M. Tobias</h1>
+  </header>
 
-    <main>
-        <section class="main-content">
-            <div class="profile-card">
-                <h3>01. About Me</h3>
-                <p>A passionate developer focused on building sleek, functional digital experiences. I find beauty in clean code and efficient logic.</p>
-            </div>
+  <main>
+    <section>
+      <div>1</div>
+      <div>2</div>
+      <div>3</div>
+      <div>4</div>
+      <div>5</div>
+      <div>6</div>
+    </section>
 
-            <div class="profile-card">
-                <h3>02. Academic Path</h3>
-                <p>Currently pursuing excellence at Asia Pacific College, specializing in modern web architectures and software engineering.</p>
-            </div>
+    <section>
+      <div class="gallery">
+        <img v-for="img in manyFoods" :src="img" style="width:100px; margin:5px;">
+      </div>
+    </section>
+  </main>
 
-            <div class="profile-card">
-                <h3>03. The Digital Stack</h3>
-                <p>Exploring the realms of Vue.js, JavaScript, and responsive design systems to bridge the gap between imagination and reality.</p>
-            </div>
-
-            <div class="profile-card">
-                <h3>04. IT Experience</h3>
-                <p>Hands-on experience with frontend frameworks, version control via GitHub, and crafting UI/UX wireframes.</p>
-            </div>
-
-            <div class="profile-card">
-                <h3>05. Hobbies & Creative Outlets</h3>
-                <p>Beyond the screen, I enjoy digital photography, exploring minimalist architecture, and strategic gaming.</p>
-            </div>
-
-            <div class="profile-card">
-                <h3>06. Future Vision</h3>
-                <p>To lead innovation in user-centric technology and develop tools that empower global communities.</p>
-            </div>
-        </section>
-
-        <section class="gallery-section">
-            <h3>07. Visual Inspiration</h3>
-            <div class="gallery-grid">
-                <img v-for="image in galleryImages" :src="image" :key="image" alt="Portfolio Image">
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        &copy; 2026 | Dedicated Student of Asia Pacific College
-    </footer>
+  <footer>
+    <p>{{ message }}</p>
+  </footer>
 </div>
 
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-<script src="js/vue.js"></script> 
-<script src="js/images.js"></script>
-
 <script>
   const { createApp, ref } = Vue;
 
   createApp({
     setup() {
-      const profileName = ref('Heinrich M. Tobias');
-      const introTagline = ref('Creative Developer | Tech Visionary');
-      
-      // If 'manyFoods' is defined in your images.js, it will pull from there
-      // Otherwise, we define a fallback array here
-      const galleryImages = ref(typeof manyFoods !== 'undefined' ? manyFoods : [
-        'https://via.placeholder.com/150',
-        'https://via.placeholder.com/150',
-        'https://via.placeholder.com/150'
-      ]);
+      const message = ref('Asia Pacific College');
+      // Using an empty array or placeholder if images.js is not loaded
+      const manyFoods = ref(typeof manyFoods !== 'undefined' ? manyFoods : []);
 
       return {
-        profileName,
-        introTagline,
-        galleryImages
+        message,
+        manyFoods
       }
     }
   }).mount('#app')
