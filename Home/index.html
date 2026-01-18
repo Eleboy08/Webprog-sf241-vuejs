@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Personal Profile - Heinrich M. Tobias</title>
   <style>
-    /* Dark Theme Styles matching the screenshot */
+    /* Base styles from previous design */
     body {
-      background-color: #0d1117; /* Dark background matching GitHub UI */
-      color: #e6edf3; /* Light text for readability */
+      background-color: #0d1117;
+      color: #e6edf3;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
       margin: 0;
       padding: 40px 20px;
@@ -44,38 +44,79 @@
       padding-left: 20px;
     }
 
-    li {
-      margin-bottom: 6px;
-      font-size: 1rem;
-      line-height: 1.5;
+    /* Contact Form Styles */
+    .contact-form {
+      border-top: 1px solid #30363d;
+      margin-top: 40px;
+      padding-top: 20px;
     }
 
-    /* Green Message Bar matching screenshot */
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      background-color: #161b22;
+      border: 1px solid #30363d;
+      color: white;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+
+    .btn-submit {
+      background-color: #238636;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .btn-submit:hover {
+      background-color: #2ea043;
+    }
+
+    .success-msg {
+      color: #3fb950;
+      margin-top: 10px;
+    }
+
+    /* Style for buttons and status bar */
+    .btn-toggle {
+      background: transparent;
+      border: 1px solid #30363d;
+      color: #58a6ff;
+      padding: 5px 10px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      border-radius: 6px;
+      margin-top: 5px;
+    }
+
     .status-bar {
       background-color: #238636;
       color: white;
       padding: 8px 15px;
       display: inline-block;
       margin-top: 30px;
-      font-weight: 500;
-      border-radius: 2px;
     }
 
-    /* Bottom Gallery Box matching screenshot */
     .image-box {
       border: 1px solid #30363d;
       padding: 20px;
       display: flex;
       justify-content: flex-start;
-      gap: 40px; /* Spacing between icons */
+      gap: 40px;
       margin-top: 10px;
       background-color: #0d1117;
     }
 
     .image-box img {
-      height: 45px; /* Consistent size for icons */
+      height: 45px;
       width: auto;
-      display: block;
     }
   </style>
 </head>
@@ -83,82 +124,75 @@
 
 <div id="app" class="container">
   <header>
-    <h1>PERSONAL PROFILE WEB PAGE - {{ name }}</h1>
-  </header>
+    <h1>PERSONAL PROFILE WEB PAGE - {{ name }}</h1> </header>
 
   <main>
     <section>
       <h3>About Me</h3>
       <ul>
         <li>Hi! I am Heinrich M. Tobias</li>
+        <li v-if="showMore">I am a passionate learner exploring the world of software engineering and web development.</li>
       </ul>
+      <button class="btn-toggle" @click="showMore = !showMore">
+        {{ showMore ? 'Show Less' : 'Read More' }}
+      </button>
     </section>
 
     <section>
       <h3>Education / Achievements</h3>
-      <ul>
-        <li>Student at Asia Pacific College</li>
-      </ul>
+      <ul><li>Student at Asia Pacific College</li></ul>
     </section>
 
-    <section>
-      <h3>Course</h3>
-      <ul>
-        <li>BS Computer Science</li>
-      </ul>
+    <section class="contact-form">
+      <h3>Contact Me</h3>
+      <div v-if="!formSubmitted">
+        <div class="form-group">
+          <input v-model="contactData.name" placeholder="Your Name">
+        </div>
+        <div class="form-group">
+          <textarea v-model="contactData.message" placeholder="Your Message" rows="3"></textarea>
+        </div>
+        <button class="btn-submit" @click="submitForm">Send Message</button>
+      </div>
+      <div v-else class="success-msg">
+        Thank you, {{ contactData.name }}! Your message has been sent.
+      </div>
     </section>
 
-    <section>
-      <h3>IT Experience</h3>
-      <ul>
-        <li>Basic knowledge of HTML, CSS, and JavaScript</li>
-        <li>Learning Single Page Applications with Vue.js</li>
-        <li>Version control using GitHub</li>
-      </ul>
-    </section>
-
-    <section>
-      <h3>Hobbies & Interests</h3>
-      <ul>
-        <li>Web Development</li>
-        <li>Gaming and Technology</li>
-        <li>Exploring New Cuisines</li>
-      </ul>
-    </section>
-
-    <section>
-      <h3>Goals In Life / Dream</h3>
-      <ul>
-        <li>To become a Full-Stack Software Engineer</li>
-        <li>To innovate through digital solutions</li>
-      </ul>
-    </section>
-
-    <div class="status-bar">
-      {{ message }}
-    </div>
-
-    <div class="image-box">
-      <img v-for="img in foodGallery" :src="img" :key="img" alt="Favorite Food">
-    </div>
+    <div class="status-bar">{{ message }}</div> <div class="image-box">
+      <img v-for="img in foodGallery" :src="img" :key="img" alt="Favorite Food"> </div>
   </main>
 </div>
 
-<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-
-<script src="js/images.js"></script>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script> <script src="js/images.js"></script>
 
 <script>
-  const { createApp, ref, onMounted } = Vue;
+  const { createApp, ref, reactive, onMounted } = Vue;
 
   createApp({
     setup() {
       const name = ref('HEINRICH M. TOBIAS');
       const message = ref('Yummm, my favorite food!!');
       const foodGallery = ref([]);
+      const showMore = ref(false);
+
+      // Contact Form State
+      const formSubmitted = ref(false);
+      const contactData = reactive({
+        name: '',
+        message: ''
+      });
+
+      const submitForm = () => {
+        if(contactData.name && contactData.message) {
+          formSubmitted.value = true;
+          console.log("Form Data:", contactData);
+        } else {
+          alert("Please fill in both fields!");
+        }
+      };
 
       onMounted(() => {
-        // This checks if 'manyFoods' is defined in your js/images.js file
         if (typeof manyFoods !== 'undefined') {
           foodGallery.value = manyFoods;
         }
@@ -167,7 +201,11 @@
       return {
         name,
         message,
-        foodGallery
+        foodGallery,
+        showMore,
+        contactData,
+        formSubmitted,
+        submitForm
       }
     }
   }).mount('#app')
