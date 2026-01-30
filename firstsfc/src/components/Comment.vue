@@ -13,7 +13,7 @@
       display: inline-block;
       margin: 10px;
       padding: 10px;
-      background-color: lightyellow;
+      background-color: rgb(70, 146, 218);
     }
   </style>
 
